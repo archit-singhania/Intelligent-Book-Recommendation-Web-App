@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ecosystem Overview - Book Recommendation Intelligence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --background-light: #f9fafb;
+            --background-dark: #f3f4f6;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .authors-header {
+            background: linear-gradient(135deg,
+                rgba(37, 99, 235, 0.05) 0%,
+                rgba(59, 130, 246, 0.03) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.08);
+            margin-bottom: 2rem;
+        }
+        .card-insight {
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="authors-header text-center">
+            <h1 class="display-4 text-primary">Book Ecosystem Overview</h1>
+            <p class="lead text-secondary">Comprehensive Insights into Our Book Universe</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">📚 Total Books</h5>
+                    <p class="text-muted">
+                        <strong>{{ overview.total_books }}</strong> unique books in our collection
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">✍️ Total Authors</h5>
+                    <p class="text-muted">
+                        <strong>{{ overview.total_authors }}</strong> creative writers
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">👥 Total Users</h5>
+                    <p class="text-muted">
+                        <strong>{{ overview.total_users }}</strong> book enthusiasts
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Book Highlights
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6 class="text-primary">Most Rated Book</h6>
+                            <p>
+                                <strong>{{ overview.most_rated_book.name }}</strong> 
+                                by {{ overview.most_rated_book.author }}
+                            </p>
+                            <span class="badge bg-secondary">
+                                Ratings: {{ overview.most_rated_book.rating_count }}
+                            </span>
+                            <span class="badge bg-info">
+                                Avg Rating: {{ overview.most_rated_book.avg_rating }}
+                            </span>
+                        </div>
+                        <div>
+                            <h6 class="text-primary">Top Rated Book</h6>
+                            <p>
+                                <strong>{{ overview.top_rated_book.name }}</strong> 
+                                by {{ overview.top_rated_book.author }}
+                            </p>
+                            <span class="badge bg-success">
+                                Avg Rating: {{ overview.top_rated_book.avg_rating }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        User and Author Insights
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6 class="text-primary">Most Active User</h6>
+                            <p>User ID: {{ overview.most_active_user.user_id }}</p>
+                            <span class="badge bg-secondary">
+                                Ratings Made: {{ overview.most_active_user.rating_count }}
+                            </span>
+                            <span class="badge bg-info">
+                                Avg User Rating: {{ overview.most_active_user.avg_user_rating }}
+                            </span>
+                        </div>
+                        <div>
+                            <h6 class="text-primary">Most Popular Author</h6>
+                            <p>
+                                <strong>{{ overview.most_popular_author.name }}</strong>
+                            </p>
+                            <span class="badge bg-success">
+                                Books Published: {{ overview.most_popular_author.book_count }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        Rating Distribution
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ visuals.chart_image }}" alt="{{ visuals.chart_description }}" class="img-fluid rounded mb-3">
+                        
+                        <h5>Strategic Insights: Rating Distribution Analysis</h5>
+                        
+                        <p><strong>Executive Summary:</strong> This visualization provides a comprehensive view of our customer satisfaction metrics, breaking down rating distributions to inform strategic decision-making.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Key Performance Indicators</h6>
+                                <ul class="list-unstyled">
+                                    <li>• Total Ratings Analyzed: {{ total_ratings }}</li>
+                                    <li>• Average Rating: {{ average_rating }}</li>
+                                    <li>• Median Rating: {{ median_rating }}</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Distribution Insights</h6>
+                                <table class="table table-sm">
+                                    <tr><td>Top Performers (8-10)</td><td>{{ high_ratings_percent }}%</td></tr>
+                                    <tr><td>Middle Ground (5-7)</td><td>{{ mid_ratings_percent }}%</td></tr>
+                                    <tr><td>Improvement Area (0-4)</td><td>{{ low_ratings_percent }}%</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <h6>Strategic Interpretation</h6>
+                        <p>The rating distribution reveals critical business intelligence:</p>
+                        
+                        <ul>
+                            <li><strong>Customer Satisfaction Concentration:</strong> The chart maps our customer sentiment across different rating levels, highlighting areas of success and opportunities for improvement.</li>
+                            <li><strong>Actionable Insights:</strong> Clusters in specific rating ranges provide direct guidance for targeted strategic interventions.</li>
+                        </ul>
+                        
+                        <p><strong>Recommended Actions:</strong>
+                            <br>• Investigate factors driving peak performance ratings
+                            <br>• Develop improvement strategies for lower-rated segments
+                            <br>• Implement targeted customer experience enhancements</p>
+                        
+                        <div class="alert alert-info" role="alert">
+                            <strong>Note to Leadership:</strong> This data-driven approach transforms customer feedback into strategic opportunities for organizational growth.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

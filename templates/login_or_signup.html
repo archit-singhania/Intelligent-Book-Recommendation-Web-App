@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login or Signup</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --background-light: #f9fafb;
+            --background-dark: #f3f4f6;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.03) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .auth-container {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 2rem;
+            background: #fff;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.08);
+            text-align: center;
+        }
+        .btn-custom {
+            width: 100%;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            font-weight: 500;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-google {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            color: #757575;
+        }
+        .btn-google:hover {
+            background-color: #f5f5f5;
+        }
+        .btn-google img {
+            margin-right: 10px;
+        }
+        .btn-signup {
+            background-color: var(--accent-color);
+            border: none;
+        }
+        .btn-signup:hover {
+            background-color: var(--secondary-color);
+        }
+        .divider {
+            margin: 1.5rem 0;
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="auth-container">
+        <h2 class="mb-3 text-primary">Welcome!</h2>
+        <p class="text-secondary mb-4">Choose a method to log in or sign up.</p>
+
+        <!-- Google login button -->
+        <a href="{{ url_for('google_login') }}" class="btn btn-google btn-custom" aria-label="Continue with Google">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/>
+                <path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.59-3.87-12.33-9.07H4.34v5.7C7.96 41.07 15.4 46 24 46z"/>
+                <path fill="#FBBC05" d="M11.67 28.18c-1.11-3.27-1.11-6.8 0-10.07V12.4H4.34A23.936 23.936 0 0 0 0 24c0 3.85.93 7.48 2.59 10.6l7.08-5.42z"/>
+                <path fill="#EA4335" d="M24 9.5c3.25 0 6.18 1.18 8.49 3.49l6.36-6.36C34.87 3.07 29.93 1 24 1 15.4 1 7.96 5.93 4.34 14.4l7.33 5.71C13.41 13.37 18.27 9.5 24 9.5z"/>
+            </svg>
+            Continue with Google
+        </a>
+
+        <!-- Divider and Signup button -->
+        <div class="divider">Don't have an account?</div>
+        <a href="{{ url_for('signup') }}" class="btn btn-signup btn-custom text-white" aria-label="Sign Up">
+            Sign Up
+        </a>
+
+        <!-- Divider and Login button -->
+        <div class="divider">Already have an account?</div>
+        <a href="{{ url_for('login') }}" class="btn btn-signup btn-custom text-white" aria-label="Login">
+            Continue to Login
+        </a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

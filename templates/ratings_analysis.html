@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ratings Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --background-light: #f9fafb;
+            --background-dark: #f3f4f6;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+        }
+        .card-insight {
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="text-center mb-4 text-primary">Book Ratings Intelligence</h1>
+
+        <!-- Intro Section -->
+        <div class="card-insight mb-4">
+            <h5 class="text-primary">📚 Welcome to the Book Ratings Analysis!</h5>
+            <p>This page provides insights into book ratings, user activity, and the distribution of ratings. 
+               Explore the top-rated books, active users, and how ratings are distributed across various books.</p>
+        </div>
+
+        <div class="row">
+            <!-- Ratings Distribution -->
+            <div class="col-md-8">
+                <div class="card-insight">
+                    <h5 class="text-primary mb-3">📊 Ratings Distribution</h5>
+                    <div id="ratings-histogram"></div>
+                </div>
+            </div>
+            
+            <!-- Top Active Users -->
+            <div class="col-md-4">
+                <div class="card-insight">
+                    <h5 class="text-primary mb-3">🏆 Top Active Users</h5>
+                    <ul class="list-unstyled">
+                        {% for user_id, rating_count in top_active_users.items() %}
+                        <li>User ID: {{ user_id }} ({{ rating_count }} ratings)</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Rated Books -->
+        <div class="card-insight mt-4">
+            <h5 class="text-primary mb-3">⭐ Top 5 Rated Books</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Average Rating</th>
+                        <th>Number of Ratings</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in top_rated_books %}
+                    <tr>
+                        <td>{{ book['Book Title'] }}</td>
+                        <td>{{ book['Book Author'] }}</td>
+                        <td>{{ book['Average Rating'] | default(0.0) | round(2) }}</td>
+                        <td>{{ book['Number of Ratings'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+    // Ratings Distribution Histogram (simulating random data)
+    var data = {
+        x: {{ ratings_distribution.bins | tojson }},
+        y: {{ ratings_distribution.counts | tojson }},
+        type: 'bar',
+        marker: {
+            color: 'rgba(37, 99, 235, 0.7)',
+            line: {
+                color: 'rgba(37, 99, 235, 1)',
+                width: 1.5
+            }
+        }
+    };
+
+    var layout = {
+        title: 'Book Ratings Distribution',
+        xaxis: {title: 'Rating Ranges'},
+        yaxis: {title: 'Number of Books'},
+        plot_bgcolor: 'rgba(0,0,0,0)',
+        paper_bgcolor: 'rgba(0,0,0,0)'
+    };
+
+    Plotly.newPlot('ratings-histogram', [data], layout);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

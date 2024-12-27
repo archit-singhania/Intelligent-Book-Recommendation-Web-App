@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Model Results - Insights</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #7c3aed;
+            --accent-color: #a78bfa;
+            --text-primary: #1f2937;
+            --text-secondary: #4b5563;
+            --background-light: #f5f3ff;
+            --background-dark: #ede9fe;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .header {
+            background: linear-gradient(135deg,
+                rgba(124, 58, 237, 0.1) 0%,
+                rgba(167, 139, 250, 0.05) 100%);
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.1);
+            margin-bottom: 2rem;
+        }
+        .table {
+            background-color: var(--background-dark);
+            border-radius: 8px;
+        }
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+        }
+        .plot {
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            background-color: rgba(167, 139, 250, 0.1);
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <!-- Header Section -->
+        <div class="header text-center">
+            <h1 class="display-4 text-primary">Machine Learning Model Insights</h1>
+            <p class="lead text-secondary">Comprehensive Results and Visualizations</p>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Introduction to the Results
+                    </div>
+                    <div class="card-body">
+                        <p>In this report, we present the results from various machine learning models. The goal of these models is to predict outcomes based on input data, which can be helpful in many areas such as predicting customer behavior, identifying trends, and making data-driven decisions.</p>
+                        <p>We will discuss the performance of the following models:</p>
+                        <ul>
+                            <li><strong>Linear Regression</strong> – A model used to predict continuous values based on input features.</li>
+                            <li><strong>Ridge Regression</strong> – Similar to linear regression but includes regularization to prevent overfitting.</li>
+                            <li><strong>Lasso Regression</strong> – A variant of regression that adds regularization to improve model generalization.</li>
+                            <li><strong>Random Forest</strong> – A machine learning method that uses multiple decision trees to improve prediction accuracy.</li>
+                        </ul>
+                        <p>We will evaluate the models using a variety of metrics such as:</p>
+                        <ul>
+                            <li><strong>MSE (Mean Squared Error)</strong> – Measures the average squared difference between predicted and actual values. A lower value indicates better performance.</li>
+                            <li><strong>Accuracy</strong> – The percentage of correct predictions made by the model.</li>
+                            <li><strong>Precision, Recall, and F1-Score</strong> – These are used in classification tasks to measure how well the model identifies each class (e.g., classifying positive vs negative outcomes).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model Performance Metrics (Including MSE, Accuracy) -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Model Performance Metrics
+                    </div>
+                    <div class="card-body">
+                        <p>The following table displays the performance of each model, with the key metrics that we use to evaluate how well the model is performing:</p>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Metric</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Linear Regression</td>
+                                    <td>MSE: 11.40</td>
+                                </tr>
+                                <tr>
+                                    <td>Ridge Regression</td>
+                                    <td>MSE: 11.40</td>
+                                </tr>
+                                <tr>
+                                    <td>Lasso Regression</td>
+                                    <td>MSE: 11.40</td>
+                                </tr>
+                                <tr>
+                                    <td>Random Forest</td>
+                                    <td>Accuracy: 0.7828</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classification Report -->
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        Classification Report
+                    </div>
+                    <div class="card-body">
+                        <p>For the Random Forest model (a classification model), we provide a detailed report of how well it performs in predicting the classes (i.e., categories or labels). Key metrics include:</p>
+                        <ul>
+                            <li><strong>Precision</strong> – The proportion of positive predictions that are correct.</li>
+                            <li><strong>Recall</strong> – The proportion of actual positives that were correctly identified by the model.</li>
+                            <li><strong>F1-Score</strong> – A balance between precision and recall, providing a single metric that balances both concerns.</li>
+                            <li><strong>Support</strong> – The number of actual occurrences of each class in the dataset.</li>
+                            <li><strong>Accuracy</strong> – The overall correctness of the model across all predictions.</li>
+                        </ul>
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Class 0</th>
+                                    <th>Class 1</th>
+                                    <th>Macro Avg</th>
+                                    <th>Weighted Avg</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Precision</td>
+                                    <td>0.9011</td>
+                                    <td>0.3064</td>
+                                    <td>0.6037</td>
+                                    <td>0.8177</td>
+                                </tr>
+                                <tr>
+                                    <td>Recall</td>
+                                    <td>0.8396</td>
+                                    <td>0.4344</td>
+                                    <td>0.6370</td>
+                                    <td>0.7828</td>
+                                </tr>
+                                <tr>
+                                    <td>F1-Score</td>
+                                    <td>0.8693</td>
+                                    <td>0.3593</td>
+                                    <td>0.6143</td>
+                                    <td>0.7978</td>
+                                </tr>
+                                <tr>
+                                    <td>Support</td>
+                                    <td>2245</td>
+                                    <td>366</td>
+                                    <td>2611</td>
+                                    <td>2611</td>
+                                </tr>
+                                <tr>
+                                    <td>Accuracy</td>
+                                    <td colspan="4">0.7828</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visualizations -->
+        <div class="row">
+            {% for model, plot_url in visuals.items() %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        {{ model }} Visualization
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="plot">
+                            <img src="{{ plot_url }}" alt="{{ model }} Plot" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

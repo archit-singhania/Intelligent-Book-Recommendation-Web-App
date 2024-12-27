@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Genre Intelligence - Discover Your Next Read</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --background-light: #f9fafb;
+            --background-dark: #f3f4f6;
+            --error-color: #dc3545;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .genre-header {
+            background: linear-gradient(135deg,
+                rgba(37, 99, 235, 0.05) 0%,
+                rgba(59, 130, 246, 0.03) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.08);
+            margin-bottom: 2rem;
+        }
+        .card-insight {
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+        .card-insight:hover {
+            transform: scale(1.02);
+        }
+        .no-results {
+            background-color: rgba(220, 53, 69, 0.1);
+            border: 1px solid var(--error-color);
+            color: var(--error-color);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .recommended-books li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
+            background-color: rgba(37, 99, 235, 0.03);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="genre-header text-center">
+            <h1 class="display-4 text-primary">Book Genre Intelligence</h1>
+            <p class="lead text-secondary">Uncover Book Insights and Personalized Recommendations</p>
+        </div>
+
+        <!-- Search Form -->
+        <form action="{{ url_for('genre_analysis') }}" method="POST" id="bookSearchForm">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="book_title" 
+                               name="book_title" 
+                               placeholder="Enter a book title (e.g., Pride and Prejudice)" 
+                               required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Analyze Book
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Results Section -->
+        {% if book_details is none %}
+            <div class="no-results mt-4">
+                <p>😔 No book details found. Please check the book title and try again.</p>
+                <small class="text-muted">Tip: Ensure the book title matches its Wikipedia entry exactly.</small>
+            </div>
+        {% elif book_details %}
+            <div class="row mt-5">
+                <!-- Book Details Card -->
+                <div class="col-md-6">
+                    <div class="card-insight">
+                        <h5 class="text-primary mb-3">📖 Book Details</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <strong>Title:</strong> {{ book_details['title'] }}
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Author:</strong> {{ book_details['author'] }}
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Publication Date:</strong> {{ book_details['publication_year'] }}
+                            </div>
+                            <div class="col-md-6">
+                                <strong>Genre:</strong> {{ (book_details['genre'] or ['Not Specified']) | join(', ') }}
+                            </div>
+                        </div>
+                        <hr>
+                        <p><strong>Summary:</strong> {{ book_details['summary'] or 'No summary available.' }}</p>
+                    </div>
+                </div>
+
+                <!-- Recommended Books Card -->
+                <div class="col-md-6">
+                    <div class="card-insight">
+                        <h5 class="text-primary mb-3">📚 Similar Books in Genre</h5>
+                        {% if book_details['recommended_books'] %}
+                            <ul class="list-unstyled recommended-books">
+                                {% for book in book_details['recommended_books'] %}
+                                    <li>{{ book }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted">No similar books found in this genre.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</body>
+</html>

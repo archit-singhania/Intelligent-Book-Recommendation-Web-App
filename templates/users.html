@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Insights - Book Recommendation Intelligence</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1e40af;
+            --secondary-color: #2563eb;
+            --accent-color: #3b82f6;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --background-light: #f9fafb;
+            --background-dark: #f3f4f6;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .header-section {
+            background-color: var(--background-dark);
+            color: var(--text-primary);
+            padding: 3rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.1);
+            margin-bottom: 3rem;
+        }
+        .card-insight {
+            background-color: rgba(37, 99, 235, 0.05);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <!-- Unified Header Section -->
+        <div class="header-section text-center">
+            <h2 class="display-4 text-primary">Welcome to the User Insights Dashboard</h2>
+            <p class="lead text-secondary">
+                Dive deep into the demographics and behavior of our users. This dashboard presents valuable insights into the age distribution, geographical trends, and activity levels of readers engaging with our book recommendation system.
+            </p>
+            <p class="text-muted">
+                Use these insights to understand user engagement and improve the user experience. Explore user demographics, location trends, and the most active readers in the community.
+            </p>
+        </div>
+
+        <!-- Main Insights Section -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">👥 Total Users</h5>
+                    <p class="text-muted">
+                        <strong id="total-users">278838</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">📊 Average User Age</h5>
+                    <p class="text-muted">
+                        <strong id="average-age">29.7</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card-insight">
+                    <h5 class="text-primary">🌍 Top User Location</h5>
+                    <p class="text-muted">
+                        <strong id="top-location">London, England, United Kingdom</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        User Age Distribution
+                    </div>
+                    <div class="card-body">
+                        <canvas id="user-age-bar-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        Top User Locations
+                    </div>
+                    <div class="card-body">
+                        <canvas id="user-locations-bar-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        Top Users
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User ID</th>
+                                    <th>Location</th>
+                                    <th>Age</th>
+                                </tr>
+                            </thead>
+                            <tbody id="top-users-list">
+                                <tr><td>278858</td><td>Dublin, Ireland</td><td>22</td></tr>
+                                <tr><td>278857</td><td>Knoxville, Tennessee, USA</td><td>22</td></tr>
+                                <tr><td>278856</td><td>Brampton, Ontario, Canada</td><td>22</td></tr>
+                                <tr><td>278855</td><td>Tacoma, Washington, United Kingdom</td><td>50</td></tr>
+                                <tr><td>278854</td><td>Portland, Oregon, USA</td><td>22</td></tr>
+                                <tr><td>278853</td><td>Stranraer, United Kingdom</td><td>17</td></tr>
+                                <tr><td>278852</td><td>Brisbane, Queensland, Australia</td><td>32</td></tr>
+                                <tr><td>278851</td><td>Dallas, Texas, USA</td><td>33</td></tr>
+                                <tr><td>278850</td><td>Sergnano, Lombardia, Italy</td><td>22</td></tr>
+                                <tr><td>278849</td><td>Georgetown, Ontario, Canada</td><td>23</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Fetch user insights from the API
+        fetch('/api/user-insights')
+            .then(response => response.json())
+            .then(data => {
+                // Populate total users, average age, and top location
+                document.getElementById('total-users').textContent = data.total_users;
+                document.getElementById('average-age').textContent = data.avg_age.toFixed(1);
+                
+                // Find top location
+                const topLocation = Object.keys(data.top_locations)[0];
+                document.getElementById('top-location').textContent = topLocation;
+
+                // Age Distribution Chart
+                const ageCtx = document.getElementById('user-age-bar-chart').getContext('2d');
+                new Chart(ageCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.age_distribution),
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: Object.values(data.age_distribution),
+                            backgroundColor: 'rgba(37, 99, 235, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Users'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Age Groups'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Top Locations Chart
+                const locationsCtx = document.getElementById('user-locations-bar-chart').getContext('2d');
+                new Chart(locationsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.top_locations),
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: Object.values(data.top_locations),
+                            backgroundColor: 'rgba(59, 130, 246, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Number of Users'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Locations'
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Populate Top Users
+                const topUsersList = document.getElementById('top-users-list');
+                data.top_users.forEach(user => {
+                    const row = `
+                        <tr>
+                            <td>${user['User Id']}</td>
+                            <td>${user.Location}</td>
+                            <td>${user.Age}</td>
+                        </tr>
+                    `;
+                    topUsersList.innerHTML += row;
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching user insights:', error);
+                // Optional: Display error message to user
+                document.querySelector('.container').innerHTML += `
+                    <div class="alert alert-danger" role="alert">
+                        Unable to load user insights. Please try again later.
+                    </div>
+                `;
+            });
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
