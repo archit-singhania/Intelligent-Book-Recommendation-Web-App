@@ -20,6 +20,9 @@ Ensures that all books have accurate genre information for better recommendation
 5. Web Application (HTML, CSS, JavaScript, Flask) 🌐
 A user-friendly front-end built with HTML, CSS, Bootstrap, and JavaScript.
 Python Flask is used to serve the backend and integrate the machine learning models.
+6. User Authentication (SQLite & Google API Login) 🔒
+SQLite Database: Stores user login and signup data securely.
+Google API Login: Users can log in using their Google accounts for convenience and security.
 Technologies Used 💡
 
 Python: The backbone of the recommendation engine, used for data analysis and machine learning.
@@ -27,6 +30,8 @@ Pandas: For data manipulation and cleaning.
 Scikit-learn: For implementing machine learning algorithms (Collaborative Filtering, etc.).
 Matplotlib & Seaborn: For data visualization and EDA.
 Wikipedia API: To fetch missing genre information for books.
+SQLite: For storing user authentication data (login/signup).
+Google API: For Google OAuth login integration.
 Flask: For backend development.
 HTML/CSS/JavaScript: For the front-end of the web application.
 Bootstrap: For responsive design and UI components.
@@ -35,6 +40,9 @@ How It Works 🔧
 Data Collection: Raw data about books, users, and ratings is collected and stored.
 Data Cleaning: Missing values, duplicates, and outliers are handled to ensure the quality of the data.
 Genre Fetching: The Wikipedia API is used to fetch genre information for books that do not have this data in the dataset.
+User Authentication:
+SQLite stores user login and signup information securely.
+Users can log in via Google using the Google OAuth API for an easy authentication process.
 Model Training: Machine learning models (both supervised and unsupervised) are trained using collaborative filtering techniques.
 Recommendation Generation: Based on user input, the system generates personalized book recommendations.
 User Interface: Users interact with the web application, where they can view book recommendations based on their preferences.
@@ -48,13 +56,15 @@ Navigate into the project directory:
 cd book-recommendation-system
 Install the required dependencies:
 pip install -r requirements.txt
+Set up your Google OAuth credentials:
+Go to the Google Developer Console.
+Create a new project and enable the "Google+ API".
+Create OAuth 2.0 credentials and download the JSON file.
+Place the JSON credentials file in the project directory and rename it to client_secrets.json.
 Run the Flask application:
 python app.py
 Open your browser and visit:
 http://127.0.0.1:5000
-Demo 🎬
-
-A live demo can be accessed here (if available).
 
 Performance Evaluation 📊
 
@@ -62,4 +72,3 @@ The system evaluates the performance using:
 
 Accuracy Metrics: Evaluate how well the model predicts user preferences.
 Mean Squared Error (MSE): Provides insights into the precision of the recommendations.
-Contributing 🤝
